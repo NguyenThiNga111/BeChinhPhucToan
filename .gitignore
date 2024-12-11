@@ -1,0 +1,6 @@
+# Thư mục build tạm
+bin/
+obj/
+
+# File của Visual Studio
+.vs/
