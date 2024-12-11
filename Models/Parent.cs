@@ -12,8 +12,8 @@ namespace BeChinhPhucToan_BE.Models
 
         [ForeignKey(nameof(User))]
         public string phoneNumber { get; set; }
-        public User User { get; set; }
-        public IList<NotifyParent> NotifyParents { get; set; }
-        public ICollection<Student> Students { get; set; }
+        public User? User { get; set; }
+        public IList<NotifyParent>? NotifyParents { get; set; }
+        public ICollection<Student>? Students { get; set; }
     }
 }

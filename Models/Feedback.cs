@@ -9,6 +9,6 @@ namespace BeChinhPhucToan_BE.Models
         public string message { get; set; }
         [ForeignKey(nameof(User))]
         public string userPhone { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }

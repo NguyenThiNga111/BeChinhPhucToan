@@ -17,15 +17,6 @@ namespace BeChinhPhucToan_BE.Controllers
             _context = context;
         }
 
-        private string duplicateException (Exception ex)
-        {
-            if (ex.InnerException != null && ex.InnerException.Message.Contains("PRIMARY KEY"))
-                return  "The phone number is already in use!";
-            else if (ex.InnerException.Message.Contains("IX_Administrators_email"))
-                return "The email is already in use!";
-            return null;
-        }
-
         [HttpGet]
         public async Task<ActionResult<List<Administrator>>> getAllAdmins()
         {
@@ -54,7 +45,9 @@ namespace BeChinhPhucToan_BE.Controllers
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(new { message = duplicateException(ex) });
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("PRIMARY KEY"))
+                    return BadRequest(new { message = "The email is already in use!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.InnerException.Message });
             }
             catch (Exception ex)
             {
@@ -80,7 +73,9 @@ namespace BeChinhPhucToan_BE.Controllers
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(new { message = duplicateException(ex) });
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("PRIMARY KEY"))
+                    return BadRequest(new { message = "The email is already in use!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.InnerException.Message });
             }
             catch (Exception ex)
             {

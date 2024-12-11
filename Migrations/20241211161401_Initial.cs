@@ -283,7 +283,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     parentEmail = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     notificationID = table.Column<int>(type: "int", nullable: false),
-                    ParentNotificationid = table.Column<int>(type: "int", nullable: false),
+                    ParentNotificationid = table.Column<int>(type: "int", nullable: true),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -294,8 +294,7 @@ namespace BeChinhPhucToan_BE.Migrations
                         name: "FK_NotifyParent_ParentNotifications_ParentNotificationid",
                         column: x => x.ParentNotificationid,
                         principalTable: "ParentNotifications",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_NotifyParent_Parents_parentEmail",
                         column: x => x.parentEmail,
@@ -379,7 +378,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     groupID = table.Column<int>(type: "int", nullable: false),
                     studentID = table.Column<int>(type: "int", nullable: false),
-                    GroupChatid = table.Column<int>(type: "int", nullable: false),
+                    GroupChatid = table.Column<int>(type: "int", nullable: true),
                     joinedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     leftDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -392,8 +391,7 @@ namespace BeChinhPhucToan_BE.Migrations
                         name: "FK_JoinGroup_GroupChats_GroupChatid",
                         column: x => x.GroupChatid,
                         principalTable: "GroupChats",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_JoinGroup_Students_studentID",
                         column: x => x.studentID,
@@ -408,7 +406,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     groupID = table.Column<int>(type: "int", nullable: false),
                     studentID = table.Column<int>(type: "int", nullable: false),
-                    GroupChatid = table.Column<int>(type: "int", nullable: false),
+                    GroupChatid = table.Column<int>(type: "int", nullable: true),
                     message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     sentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -421,8 +419,7 @@ namespace BeChinhPhucToan_BE.Migrations
                         name: "FK_Messages_GroupChats_GroupChatid",
                         column: x => x.GroupChatid,
                         principalTable: "GroupChats",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_Messages_Students_studentID",
                         column: x => x.studentID,
@@ -437,7 +434,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     studentID = table.Column<int>(type: "int", nullable: false),
                     notificationID = table.Column<int>(type: "int", nullable: false),
-                    ParentNotificationid = table.Column<int>(type: "int", nullable: false),
+                    ParentNotificationid = table.Column<int>(type: "int", nullable: true),
                     StudentNotificationid = table.Column<int>(type: "int", nullable: true),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -449,8 +446,7 @@ namespace BeChinhPhucToan_BE.Migrations
                         name: "FK_NotifyStudent_ParentNotifications_ParentNotificationid",
                         column: x => x.ParentNotificationid,
                         principalTable: "ParentNotifications",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_NotifyStudent_StudentNotifications_StudentNotificationid",
                         column: x => x.StudentNotificationid,
@@ -598,7 +594,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     exerciseID = table.Column<int>(type: "int", nullable: false),
                     studentID = table.Column<int>(type: "int", nullable: false),
-                    Excerciseid = table.Column<int>(type: "int", nullable: false),
+                    Excerciseid = table.Column<int>(type: "int", nullable: true),
                     comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -610,8 +606,7 @@ namespace BeChinhPhucToan_BE.Migrations
                         name: "FK_Comments_Excercises_Excerciseid",
                         column: x => x.Excerciseid,
                         principalTable: "Excercises",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_Comments_Students_studentID",
                         column: x => x.studentID,

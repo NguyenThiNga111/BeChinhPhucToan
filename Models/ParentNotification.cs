@@ -5,6 +5,6 @@
         public int id { get; set; }
         public string message { get; set; }
         public bool isRead { get; set; }
-        public IList<NotifyParent> NotifyParents { get; set; }
+        public IList<NotifyParent>? NotifyParents { get; set; }
     }
 }
