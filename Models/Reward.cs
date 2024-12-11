@@ -10,7 +10,7 @@
         public bool isAvailable { get; set; }
 
         public int studentID { get; set; }
-        public Student Student { get; set; }
+        public Student? Student { get; set; }
 
     }
 }

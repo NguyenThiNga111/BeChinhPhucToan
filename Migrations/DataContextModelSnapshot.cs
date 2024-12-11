@@ -119,7 +119,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<int>("exerciseID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Excerciseid")
+                    b.Property<int?>("Excerciseid")
                         .HasColumnType("int");
 
                     b.Property<string>("comment")
@@ -292,7 +292,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<int>("studentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupChatid")
+                    b.Property<int?>("GroupChatid")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("createdAt")
@@ -352,7 +352,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<int>("studentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupChatid")
+                    b.Property<int?>("GroupChatid")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("createdAt")
@@ -385,7 +385,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<int>("notificationID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ParentNotificationid")
+                    b.Property<int?>("ParentNotificationid")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("createdAt")
@@ -409,7 +409,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<int>("notificationID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ParentNotificationid")
+                    b.Property<int?>("ParentNotificationid")
                         .HasColumnType("int");
 
                     b.Property<int?>("StudentNotificationid")
@@ -836,9 +836,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     b.HasOne("BeChinhPhucToan_BE.Models.Excercise", "Excercise")
                         .WithMany("Comments")
-                        .HasForeignKey("Excerciseid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Excerciseid");
 
                     b.HasOne("BeChinhPhucToan_BE.Models.Student", "Student")
                         .WithMany("Comments")
@@ -888,9 +886,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     b.HasOne("BeChinhPhucToan_BE.Models.GroupChat", "GroupChat")
                         .WithMany("JoinGroup")
-                        .HasForeignKey("GroupChatid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupChatid");
 
                     b.HasOne("BeChinhPhucToan_BE.Models.Student", "Student")
                         .WithMany("JoinGroup")
@@ -918,9 +914,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     b.HasOne("BeChinhPhucToan_BE.Models.GroupChat", "GroupChat")
                         .WithMany("Messages")
-                        .HasForeignKey("GroupChatid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupChatid");
 
                     b.HasOne("BeChinhPhucToan_BE.Models.Student", "Student")
                         .WithMany("Messages")
@@ -937,9 +931,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     b.HasOne("BeChinhPhucToan_BE.Models.ParentNotification", "ParentNotification")
                         .WithMany("NotifyParents")
-                        .HasForeignKey("ParentNotificationid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentNotificationid");
 
                     b.HasOne("BeChinhPhucToan_BE.Models.Parent", "Parent")
                         .WithMany("NotifyParents")
@@ -956,9 +948,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 {
                     b.HasOne("BeChinhPhucToan_BE.Models.ParentNotification", "ParentNotification")
                         .WithMany()
-                        .HasForeignKey("ParentNotificationid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentNotificationid");
 
                     b.HasOne("BeChinhPhucToan_BE.Models.StudentNotification", null)
                         .WithMany("NotifyStudent")
@@ -1158,8 +1148,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.Navigation("Rewards");
 
-                    b.Navigation("Setting")
-                        .IsRequired();
+                    b.Navigation("Setting");
 
                     b.Navigation("StarPoints");
                 });
@@ -1171,13 +1160,11 @@ namespace BeChinhPhucToan_BE.Migrations
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.User", b =>
                 {
-                    b.Navigation("Administrator")
-                        .IsRequired();
+                    b.Navigation("Administrator");
 
                     b.Navigation("Feedbacks");
 
-                    b.Navigation("Parent")
-                        .IsRequired();
+                    b.Navigation("Parent");
                 });
 #pragma warning restore 612, 618
         }

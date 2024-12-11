@@ -8,6 +8,6 @@
         public string answer { get; set; }
 
         public int rateTypeID { get; set; }
-        public RateType RateType { get; set; }
+        public RateType? RateType { get; set; }
     }
 }

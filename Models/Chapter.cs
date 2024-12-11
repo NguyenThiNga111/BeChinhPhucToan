@@ -6,8 +6,8 @@
         public string name { get; set; }
 
         public int courseID { get; set; }
-        public Course Course { get; set; }
+        public Course? Course { get; set; }
 
-        public ICollection<Lesson> Lessons { get; set; }
+        public ICollection<Lesson>? Lessons { get; set; }
     }
 }

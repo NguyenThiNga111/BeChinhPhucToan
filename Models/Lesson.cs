@@ -6,9 +6,9 @@
         public string name { get; set; }
 
         public int chapterID { get; set; }
-        public Chapter Chapter { get; set; }
+        public Chapter? Chapter { get; set; }
 
-        public IList<StarPoint> StarPoints { get; set; }
-        public ICollection<Excercise> Excercises { get; set; }
+        public IList<StarPoint>? StarPoints { get; set; }
+        public ICollection<Excercise>? Excercises { get; set; }
     }
 }
