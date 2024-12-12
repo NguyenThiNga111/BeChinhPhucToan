@@ -315,7 +315,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("studentID");
 
-                    b.ToTable("JoinGroup");
+                    b.ToTable("JoinGroups");
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Lesson", b =>
@@ -400,7 +400,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("ParentNotificationid");
 
-                    b.ToTable("NotifyParent");
+                    b.ToTable("NotifyParents");
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.NotifyStudent", b =>
@@ -431,7 +431,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("studentID");
 
-                    b.ToTable("NotifyStudent");
+                    b.ToTable("NotifyStudents");
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Parent", b =>
@@ -509,7 +509,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("studentID");
 
-                    b.ToTable("Purchase");
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.RankedScore", b =>
