@@ -2,5 +2,9 @@
 bin/
 obj/
 
+# File Migrations
+Migrations/
+
+
 # File của Visual Studio
 .vs/
