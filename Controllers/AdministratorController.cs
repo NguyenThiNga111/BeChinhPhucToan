@@ -24,10 +24,10 @@ namespace BeChinhPhucToan_BE.Controllers
             return Ok(admins);
         }
 
-        [HttpGet("{phoneNumber}")]
-        public async Task<ActionResult<Administrator>> getAdmin(string phoneNumber)
+        [HttpGet("{email}")]
+        public async Task<ActionResult<Administrator>> getAdmin(string email)
         {
-            var admin = await _context.Administrators.FindAsync(phoneNumber);
+            var admin = await _context.Administrators.FindAsync(email);
             if (admin is null)
                 return NotFound(new { message = "Administrator is not found!" });
             return Ok(admin);
@@ -55,17 +55,16 @@ namespace BeChinhPhucToan_BE.Controllers
             }
         }
 
-        [HttpPut("{phoneNumber}")]
+        [HttpPut("{email}")]
         public async Task<ActionResult<Administrator>> updateAdmin([FromBody]Administrator newInfo)
         {
             try 
             {
-                var admin = await _context.Administrators.FindAsync(newInfo.phoneNumber);
+                var admin = await _context.Administrators.FindAsync(newInfo.email);
                 if (admin is null)
                     return NotFound(new { message = "Administrator is not found!" });
 
                 admin.fullName = newInfo.fullName;
-                admin.email = newInfo.email;
 
                 await _context.SaveChangesAsync();
 
@@ -83,10 +82,10 @@ namespace BeChinhPhucToan_BE.Controllers
             }
         }
 
-        [HttpDelete("{phoneNumber}")]
-        public async Task<IActionResult> deleteAdmin(string phoneNumber)
+        [HttpDelete("{email}")]
+        public async Task<IActionResult> deleteAdmin(string email)
         {
-            var admin = await _context.Administrators.FindAsync(phoneNumber);
+            var admin = await _context.Administrators.FindAsync(email);
             
             if (admin is null)
                 return NotFound(new { message = "Administrator is not found!" });
