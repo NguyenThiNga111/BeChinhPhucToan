@@ -38,6 +38,7 @@ namespace BeChinhPhucToan_BE.Controllers
         {
             try
             {
+                user.password = BCPT.EnhancedHashPassword(user.password, 13);
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
