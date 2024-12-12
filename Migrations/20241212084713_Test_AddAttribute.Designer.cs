@@ -4,6 +4,7 @@ using BeChinhPhucToan_BE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeChinhPhucToan_BE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241212084713_Test_AddAttribute")]
+    partial class Test_AddAttribute
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,10 +116,10 @@ namespace BeChinhPhucToan_BE.Migrations
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Comment", b =>
                 {
-                    b.Property<int>("exerciseID")
+                    b.Property<int>("studentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("studentID")
+                    b.Property<int>("exerciseID")
                         .HasColumnType("int");
 
                     b.Property<int?>("Excerciseid")
@@ -132,11 +135,9 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<DateTime?>("updatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("exerciseID", "studentID");
+                    b.HasKey("studentID", "exerciseID");
 
                     b.HasIndex("Excerciseid");
-
-                    b.HasIndex("studentID");
 
                     b.ToTable("Comments");
                 });
@@ -405,10 +406,10 @@ namespace BeChinhPhucToan_BE.Migrations
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.NotifyStudent", b =>
                 {
-                    b.Property<int>("notificationID")
+                    b.Property<int>("studentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("studentID")
+                    b.Property<int>("notificationID")
                         .HasColumnType("int");
 
                     b.Property<int?>("ParentNotificationid")
@@ -423,13 +424,11 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<DateTime?>("updatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("notificationID", "studentID");
+                    b.HasKey("studentID", "notificationID");
 
                     b.HasIndex("ParentNotificationid");
 
                     b.HasIndex("StudentNotificationid");
-
-                    b.HasIndex("studentID");
 
                     b.ToTable("NotifyStudent");
                 });
@@ -514,10 +513,10 @@ namespace BeChinhPhucToan_BE.Migrations
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.RankedScore", b =>
                 {
-                    b.Property<int>("rateTypeID")
+                    b.Property<int>("studentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("studentID")
+                    b.Property<int>("rateTypeID")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("createdAt")
@@ -529,9 +528,9 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<DateTime?>("updatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("rateTypeID", "studentID");
+                    b.HasKey("studentID", "rateTypeID");
 
-                    b.HasIndex("studentID");
+                    b.HasIndex("rateTypeID");
 
                     b.ToTable("RankedScores");
                 });
@@ -666,10 +665,10 @@ namespace BeChinhPhucToan_BE.Migrations
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.StarPoint", b =>
                 {
-                    b.Property<int>("lessonID")
+                    b.Property<int>("studentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("studentID")
+                    b.Property<int>("lessonID")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("createdAt")
@@ -681,9 +680,9 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<DateTime?>("updatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("lessonID", "studentID");
+                    b.HasKey("studentID", "lessonID");
 
-                    b.HasIndex("studentID");
+                    b.HasIndex("lessonID");
 
                     b.ToTable("StarPoints");
                 });
@@ -794,16 +793,19 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("isVerify")
+                    b.Property<bool>("isVerify")
                         .HasColumnType("bit");
 
                     b.Property<string>("otpCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("otpExpiration")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("updatedAt")
