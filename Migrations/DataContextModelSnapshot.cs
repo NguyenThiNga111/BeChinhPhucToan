@@ -46,7 +46,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.HasIndex("phoneNumber")
                         .IsUnique();
 
-                    b.ToTable("Administrators");
+                    b.ToTable("Administrators", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Badge", b =>
@@ -80,7 +80,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Badges");
+                    b.ToTable("Badges", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Chapter", b =>
@@ -108,7 +108,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("courseID");
 
-                    b.ToTable("Chapters");
+                    b.ToTable("Chapters", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Comment", b =>
@@ -136,7 +136,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("Excerciseid");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Course", b =>
@@ -170,7 +170,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Excercise", b =>
@@ -202,7 +202,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("lessonID");
 
-                    b.ToTable("Excercises");
+                    b.ToTable("Excercises", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Feedback", b =>
@@ -234,7 +234,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("userPhone");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Goal", b =>
@@ -258,7 +258,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("studentID");
 
-                    b.ToTable("Goals");
+                    b.ToTable("Goals", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.GroupChat", b =>
@@ -281,7 +281,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("GroupChats");
+                    b.ToTable("GroupChats", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.JoinGroup", b =>
@@ -313,7 +313,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("studentID");
 
-                    b.ToTable("JoinGroup");
+                    b.ToTable("JoinGroup", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Lesson", b =>
@@ -341,7 +341,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("chapterID");
 
-                    b.ToTable("Lessons");
+                    b.ToTable("Lessons", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Message", b =>
@@ -374,7 +374,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("studentID");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.NotifyParent", b =>
@@ -398,7 +398,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("ParentNotificationid");
 
-                    b.ToTable("NotifyParent");
+                    b.ToTable("NotifyParent", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.NotifyStudent", b =>
@@ -427,7 +427,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("StudentNotificationid");
 
-                    b.ToTable("NotifyStudent");
+                    b.ToTable("NotifyStudent", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Parent", b =>
@@ -458,7 +458,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.HasIndex("phoneNumber")
                         .IsUnique();
 
-                    b.ToTable("Parents");
+                    b.ToTable("Parents", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.ParentNotification", b =>
@@ -484,7 +484,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("ParentNotifications");
+                    b.ToTable("ParentNotifications", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Purchase", b =>
@@ -505,7 +505,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("studentID");
 
-                    b.ToTable("Purchase");
+                    b.ToTable("Purchase", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.RankedScore", b =>
@@ -529,7 +529,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("rateTypeID");
 
-                    b.ToTable("RankedScores");
+                    b.ToTable("RankedScores", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.RankedTest", b =>
@@ -564,7 +564,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("rateTypeID");
 
-                    b.ToTable("RankedTests");
+                    b.ToTable("RankedTests", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.RateType", b =>
@@ -587,7 +587,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("RateTypes");
+                    b.ToTable("RateTypes", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Reward", b =>
@@ -629,7 +629,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("studentID");
 
-                    b.ToTable("Rewards");
+                    b.ToTable("Rewards", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Setting", b =>
@@ -657,7 +657,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.HasIndex("studentID")
                         .IsUnique();
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.StarPoint", b =>
@@ -681,7 +681,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("lessonID");
 
-                    b.ToTable("StarPoints");
+                    b.ToTable("StarPoints", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Student", b =>
@@ -720,7 +720,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasIndex("parentEmail");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.StudentNotification", b =>
@@ -746,7 +746,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("StudentNotifications");
+                    b.ToTable("StudentNotifications", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Test", b =>
@@ -776,7 +776,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Tests");
+                    b.ToTable("Tests", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.User", b =>
@@ -787,19 +787,16 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("isVerify")
+                    b.Property<bool?>("isVerify")
                         .HasColumnType("bit");
 
                     b.Property<string>("otpCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("otpExpiration")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("updatedAt")
@@ -807,7 +804,7 @@ namespace BeChinhPhucToan_BE.Migrations
 
                     b.HasKey("phoneNumber");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BeChinhPhucToan_BE.Models.Administrator", b =>

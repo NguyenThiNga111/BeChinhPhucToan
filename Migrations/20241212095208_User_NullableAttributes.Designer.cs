@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeChinhPhucToan_BE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241211161401_Initial")]
-    partial class Initial
+    [Migration("20241212095208_User_NullableAttributes")]
+    partial class User_NullableAttributes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -790,19 +790,16 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("isVerify")
+                    b.Property<bool?>("isVerify")
                         .HasColumnType("bit");
 
                     b.Property<string>("otpCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("otpExpiration")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("updatedAt")
