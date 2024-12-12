@@ -30,19 +30,11 @@ namespace BeChinhPhucToan_BE.Data
         public DbSet<StarPoint> StarPoints { get; set; }
         public DbSet<Excercise> Excercises { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<NotifyParent> NotifyParents { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<JoinGroup> JoinGroups { get; set; }
+        public DbSet<NotifyStudent> NotifyStudents { get; set; }
 
-        //Set Key
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<NotifyParent>().HasKey(np => new { np.parentEmail, np.notificationID });
-            modelBuilder.Entity<Purchase>().HasKey(p => new { p.badgeID, p.studentID });
-            modelBuilder.Entity<JoinGroup>().HasKey(jg => new { jg.groupID, jg.studentID });
-            modelBuilder.Entity<Message>().HasKey(m => new { m.groupID, m.studentID });
-            modelBuilder.Entity<NotifyStudent>().HasKey(nt => new { nt.studentID, nt.notificationID });
-            modelBuilder.Entity<RankedScore>().HasKey(rs => new { rs.studentID, rs.rateTypeID });
-            modelBuilder.Entity<StarPoint>().HasKey(sp => new { sp.studentID, sp.lessonID });
-            modelBuilder.Entity<Comment>().HasKey(c => new { c.studentID, c.exerciseID });
-        }
 
         //Add & Update Timestamp Automaticlly
         public override int SaveChanges()

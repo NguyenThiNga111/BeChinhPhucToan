@@ -1,5 +1,9 @@
-﻿namespace BeChinhPhucToan_BE.Models
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
+namespace BeChinhPhucToan_BE.Models
 {
+    [PrimaryKey(nameof(rateTypeID), nameof(studentID))]
     public class RankedScore : BaseEntity
     {
         public int studentID { get; set; }
