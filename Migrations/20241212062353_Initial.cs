@@ -131,10 +131,10 @@ namespace BeChinhPhucToan_BE.Migrations
                 columns: table => new
                 {
                     phoneNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    isVerify = table.Column<bool>(type: "bit", nullable: false),
-                    otpCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    otpExpiration = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isVerify = table.Column<bool>(type: "bit", nullable: true),
+                    otpCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    otpExpiration = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -441,7 +441,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NotifyStudent", x => new { x.studentID, x.notificationID });
+                    table.PrimaryKey("PK_NotifyStudent", x => new { x.notificationID, x.studentID });
                     table.ForeignKey(
                         name: "FK_NotifyStudent_ParentNotifications_ParentNotificationid",
                         column: x => x.ParentNotificationid,
@@ -498,7 +498,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RankedScores", x => new { x.studentID, x.rateTypeID });
+                    table.PrimaryKey("PK_RankedScores", x => new { x.rateTypeID, x.studentID });
                     table.ForeignKey(
                         name: "FK_RankedScores_RateTypes_rateTypeID",
                         column: x => x.rateTypeID,
@@ -573,7 +573,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StarPoints", x => new { x.studentID, x.lessonID });
+                    table.PrimaryKey("PK_StarPoints", x => new { x.lessonID, x.studentID });
                     table.ForeignKey(
                         name: "FK_StarPoints_Lessons_lessonID",
                         column: x => x.lessonID,
@@ -601,7 +601,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comments", x => new { x.studentID, x.exerciseID });
+                    table.PrimaryKey("PK_Comments", x => new { x.exerciseID, x.studentID });
                     table.ForeignKey(
                         name: "FK_Comments_Excercises_Excerciseid",
                         column: x => x.Excerciseid,
@@ -630,6 +630,11 @@ namespace BeChinhPhucToan_BE.Migrations
                 name: "IX_Comments_Excerciseid",
                 table: "Comments",
                 column: "Excerciseid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_studentID",
+                table: "Comments",
+                column: "studentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Excercises_lessonID",
@@ -682,6 +687,11 @@ namespace BeChinhPhucToan_BE.Migrations
                 column: "ParentNotificationid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NotifyStudent_studentID",
+                table: "NotifyStudent",
+                column: "studentID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NotifyStudent_StudentNotificationid",
                 table: "NotifyStudent",
                 column: "StudentNotificationid");
@@ -698,9 +708,9 @@ namespace BeChinhPhucToan_BE.Migrations
                 column: "studentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RankedScores_rateTypeID",
+                name: "IX_RankedScores_studentID",
                 table: "RankedScores",
-                column: "rateTypeID");
+                column: "studentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RankedTests_rateTypeID",
@@ -719,9 +729,9 @@ namespace BeChinhPhucToan_BE.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_StarPoints_lessonID",
+                name: "IX_StarPoints_studentID",
                 table: "StarPoints",
-                column: "lessonID");
+                column: "studentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_parentEmail",
