@@ -30,6 +30,11 @@ namespace BeChinhPhucToan_BE.Data
         public DbSet<StarPoint> StarPoints { get; set; }
         public DbSet<Excercise> Excercises { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<NotifyParent> NotifyParents { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<JoinGroup> JoinGroups { get; set; }
+        public DbSet<NotifyStudent> NotifyStudents { get; set; }
+
 
         //Add & Update Timestamp Automaticlly
         public override int SaveChanges()

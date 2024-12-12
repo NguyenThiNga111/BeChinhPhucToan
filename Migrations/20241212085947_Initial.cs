@@ -116,6 +116,7 @@ namespace BeChinhPhucToan_BE.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     grade = table.Column<int>(type: "int", nullable: false),
+                    code = table.Column<int>(type: "int", nullable: false),
                     question = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -278,7 +279,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NotifyParent",
+                name: "NotifyParents",
                 columns: table => new
                 {
                     parentEmail = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -289,14 +290,14 @@ namespace BeChinhPhucToan_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NotifyParent", x => new { x.parentEmail, x.notificationID });
+                    table.PrimaryKey("PK_NotifyParents", x => new { x.parentEmail, x.notificationID });
                     table.ForeignKey(
-                        name: "FK_NotifyParent_ParentNotifications_ParentNotificationid",
+                        name: "FK_NotifyParents_ParentNotifications_ParentNotificationid",
                         column: x => x.ParentNotificationid,
                         principalTable: "ParentNotifications",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_NotifyParent_Parents_parentEmail",
+                        name: "FK_NotifyParents_Parents_parentEmail",
                         column: x => x.parentEmail,
                         principalTable: "Parents",
                         principalColumn: "email",
@@ -373,7 +374,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JoinGroup",
+                name: "JoinGroups",
                 columns: table => new
                 {
                     groupID = table.Column<int>(type: "int", nullable: false),
@@ -386,14 +387,14 @@ namespace BeChinhPhucToan_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JoinGroup", x => new { x.groupID, x.studentID });
+                    table.PrimaryKey("PK_JoinGroups", x => new { x.groupID, x.studentID });
                     table.ForeignKey(
-                        name: "FK_JoinGroup_GroupChats_GroupChatid",
+                        name: "FK_JoinGroups_GroupChats_GroupChatid",
                         column: x => x.GroupChatid,
                         principalTable: "GroupChats",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_JoinGroup_Students_studentID",
+                        name: "FK_JoinGroups_Students_studentID",
                         column: x => x.studentID,
                         principalTable: "Students",
                         principalColumn: "id",
@@ -429,7 +430,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NotifyStudent",
+                name: "NotifyStudents",
                 columns: table => new
                 {
                     studentID = table.Column<int>(type: "int", nullable: false),
@@ -441,19 +442,19 @@ namespace BeChinhPhucToan_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NotifyStudent", x => new { x.notificationID, x.studentID });
+                    table.PrimaryKey("PK_NotifyStudents", x => new { x.notificationID, x.studentID });
                     table.ForeignKey(
-                        name: "FK_NotifyStudent_ParentNotifications_ParentNotificationid",
+                        name: "FK_NotifyStudents_ParentNotifications_ParentNotificationid",
                         column: x => x.ParentNotificationid,
                         principalTable: "ParentNotifications",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_NotifyStudent_StudentNotifications_StudentNotificationid",
+                        name: "FK_NotifyStudents_StudentNotifications_StudentNotificationid",
                         column: x => x.StudentNotificationid,
                         principalTable: "StudentNotifications",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_NotifyStudent_Students_studentID",
+                        name: "FK_NotifyStudents_Students_studentID",
                         column: x => x.studentID,
                         principalTable: "Students",
                         principalColumn: "id",
@@ -461,7 +462,7 @@ namespace BeChinhPhucToan_BE.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Purchase",
+                name: "Purchases",
                 columns: table => new
                 {
                     badgeID = table.Column<int>(type: "int", nullable: false),
@@ -471,15 +472,15 @@ namespace BeChinhPhucToan_BE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Purchase", x => new { x.badgeID, x.studentID });
+                    table.PrimaryKey("PK_Purchases", x => new { x.badgeID, x.studentID });
                     table.ForeignKey(
-                        name: "FK_Purchase_Badges_badgeID",
+                        name: "FK_Purchases_Badges_badgeID",
                         column: x => x.badgeID,
                         principalTable: "Badges",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Purchase_Students_studentID",
+                        name: "FK_Purchases_Students_studentID",
                         column: x => x.studentID,
                         principalTable: "Students",
                         principalColumn: "id",
@@ -652,13 +653,13 @@ namespace BeChinhPhucToan_BE.Migrations
                 column: "studentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JoinGroup_GroupChatid",
-                table: "JoinGroup",
+                name: "IX_JoinGroups_GroupChatid",
+                table: "JoinGroups",
                 column: "GroupChatid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JoinGroup_studentID",
-                table: "JoinGroup",
+                name: "IX_JoinGroups_studentID",
+                table: "JoinGroups",
                 column: "studentID");
 
             migrationBuilder.CreateIndex(
@@ -677,23 +678,23 @@ namespace BeChinhPhucToan_BE.Migrations
                 column: "studentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NotifyParent_ParentNotificationid",
-                table: "NotifyParent",
+                name: "IX_NotifyParents_ParentNotificationid",
+                table: "NotifyParents",
                 column: "ParentNotificationid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NotifyStudent_ParentNotificationid",
-                table: "NotifyStudent",
+                name: "IX_NotifyStudents_ParentNotificationid",
+                table: "NotifyStudents",
                 column: "ParentNotificationid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NotifyStudent_studentID",
-                table: "NotifyStudent",
+                name: "IX_NotifyStudents_studentID",
+                table: "NotifyStudents",
                 column: "studentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NotifyStudent_StudentNotificationid",
-                table: "NotifyStudent",
+                name: "IX_NotifyStudents_StudentNotificationid",
+                table: "NotifyStudents",
                 column: "StudentNotificationid");
 
             migrationBuilder.CreateIndex(
@@ -703,8 +704,8 @@ namespace BeChinhPhucToan_BE.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Purchase_studentID",
-                table: "Purchase",
+                name: "IX_Purchases_studentID",
+                table: "Purchases",
                 column: "studentID");
 
             migrationBuilder.CreateIndex(
@@ -755,19 +756,19 @@ namespace BeChinhPhucToan_BE.Migrations
                 name: "Goals");
 
             migrationBuilder.DropTable(
-                name: "JoinGroup");
+                name: "JoinGroups");
 
             migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "NotifyParent");
+                name: "NotifyParents");
 
             migrationBuilder.DropTable(
-                name: "NotifyStudent");
+                name: "NotifyStudents");
 
             migrationBuilder.DropTable(
-                name: "Purchase");
+                name: "Purchases");
 
             migrationBuilder.DropTable(
                 name: "RankedScores");
