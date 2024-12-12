@@ -1,5 +1,9 @@
-﻿namespace BeChinhPhucToan_BE.Models
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
+namespace BeChinhPhucToan_BE.Models
 {
+    [PrimaryKey(nameof(groupID), nameof(studentID))]
     public class JoinGroup : BaseEntity
     {
         public int groupID { get; set; }

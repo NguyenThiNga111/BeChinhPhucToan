@@ -1,5 +1,9 @@
-﻿namespace BeChinhPhucToan_BE.Models
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
+namespace BeChinhPhucToan_BE.Models
 {
+    [PrimaryKey(nameof(notificationID), nameof(studentID))]
     public class NotifyStudent : BaseEntity
     {
         public int studentID { get; set; }

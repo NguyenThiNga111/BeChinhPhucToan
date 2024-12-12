@@ -34,7 +34,7 @@ namespace BeChinhPhucToan_BE.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> addAdmin([FromBody] User user)
+        public async Task<ActionResult<User>> addUser([FromBody] User user)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace BeChinhPhucToan_BE.Controllers
         }
 
         [HttpPut("{phoneNumber}")]
-        public async Task<ActionResult<User>> updateAdmin([FromBody] User newInfo)
+        public async Task<ActionResult<User>> updateUser([FromBody] User newInfo)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace BeChinhPhucToan_BE.Controllers
         }
 
         [HttpDelete("{phoneNumber}")]
-        public async Task<IActionResult> deleteAdmin(string phoneNumber)
+        public async Task<IActionResult> deleteUser(string phoneNumber)
         {
             var user = await _context.Users.FindAsync(phoneNumber);
 
