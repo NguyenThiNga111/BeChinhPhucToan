@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BeChinhPhucToan_BE.Models
 {
+    [PrimaryKey(nameof(parentEmail), nameof(notificationID))]
     public class NotifyParent : BaseEntity
     {
         public string parentEmail { get; set; }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeChinhPhucToan_BE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241211161401_Initial")]
-    partial class Initial
+    [Migration("20241212084713_Test_AddAttribute")]
+    partial class Test_AddAttribute
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -763,6 +763,9 @@ namespace BeChinhPhucToan_BE.Migrations
                     b.Property<string>("answer")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("code")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
