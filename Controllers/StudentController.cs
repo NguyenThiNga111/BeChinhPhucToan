@@ -17,12 +17,14 @@ namespace BeChinhPhucToan_BE.Controllers
         {
             _context = context;
         }
+        // Get all student
         [HttpGet]
         public async Task<ActionResult<List<Student>>> getAllStudent()
         {
             var students = await _context.Students.ToListAsync();
             return Ok(students);
         }
+        // Get student by parent email
         [HttpGet("{parentEmail}")]
         public async Task<ActionResult<Student>> getStudent(string parentEmail)
         {
@@ -33,6 +35,7 @@ namespace BeChinhPhucToan_BE.Controllers
             }
             return Ok(student);
         }
+        // Post add student 
         [HttpPost]
         public async Task<ActionResult<Student>> addStudent([FromBody] Student student)
         {
@@ -52,6 +55,7 @@ namespace BeChinhPhucToan_BE.Controllers
             }
 
         }
+        // Put update data for id
         [HttpPut("{id}")]
         public async Task<ActionResult<Student>> updateStudent(int id, [FromBody] Student updateStudent)
         {
@@ -80,6 +84,7 @@ namespace BeChinhPhucToan_BE.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new {message = "An error occurred while updating the student", detail = ex.Message });
             }
         }
+        // Delete student for id
         [HttpDelete("{id}")]
         public async Task<ActionResult> deleteStudent(int id)
         {
@@ -97,6 +102,27 @@ namespace BeChinhPhucToan_BE.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occurred while deleting the student", detail = ex.Message });
+            }
+        }
+        // Filter student for grade
+        [HttpGet("filterbygrade/{grade}")]
+        public async Task<ActionResult<List<Student>>> getStudentByGrade(int grade)
+        {
+            try
+            {
+                var students = await _context.Students.Where(s => s.grade == grade).ToListAsync();
+                if(students == null || students.Count == 0)
+                {
+                    return NotFound(new { message = "NO student found for the given grade." });
+                }
+                return Ok(students);
+            }catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = "An error occourred while fetching the students.",
+                    detail = ex.Message
+                });
             }
         }
     }
