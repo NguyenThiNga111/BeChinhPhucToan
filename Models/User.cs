@@ -14,5 +14,7 @@ namespace BeChinhPhucToan_BE.Models
         public Administrator? Administrator { get; set; }
         public Parent? Parent { get; set; }
         public ICollection<Feedback>? Feedbacks { get; set; }
+        //public DateTime createAt { get; set; } = DateTime.Now;
+        //public DateTime updateAt { get; set; } = DateTime.Now;
     }
 }

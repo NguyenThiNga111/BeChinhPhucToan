@@ -15,5 +15,7 @@ namespace BeChinhPhucToan_BE.Models
         public User? User { get; set; }
         public IList<NotifyParent>? NotifyParents { get; set; }
         public ICollection<Student>? Students { get; set; }
+        public DateTime createAt { get; set; }
+        public DateTime updateAt { get; set; }
     }
 }
