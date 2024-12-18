@@ -28,7 +28,10 @@ namespace BeChinhPhucToan_BE.Controllers
         [HttpGet("{parentEmail}")]
         public async Task<ActionResult<Student>> getStudent(string parentEmail)
         {
-            var student = await _context.Students.FindAsync(parentEmail);
+            var student = await _context.Students
+                .Include(s => s.Parent)
+                .FirstOrDefaultAsync(s => s.Parent.email == parentEmail);
+                
             if(student is null)
             {
                 return NotFound(new { message = "Student not found" });
