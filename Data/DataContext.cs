@@ -65,5 +65,14 @@ namespace BeChinhPhucToan_BE.Data
                 ((BaseEntity)entity.Entity).updatedAt = now;
             }
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Cấu hình mối quan hệ giữa NotifyParent và ParentNotification
+            modelBuilder.Entity<NotifyParent>()
+                .HasOne(np => np.ParentNotification)
+                .WithMany(pn => pn.NotifyParents)
+                .HasForeignKey(np => np.notificationID)
+                .OnDelete(DeleteBehavior.Cascade); // Tùy chọn: Xóa liên quan nếu cần
+        }
     }
 }
