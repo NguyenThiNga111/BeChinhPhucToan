@@ -1,6 +1,6 @@
 ﻿namespace BeChinhPhucToan_BE.Models
 {
-    public class Excercise : BaseEntity
+    public class Exercise : BaseEntity
     {
         public int id { get; set; }
         public string question { get; set; }

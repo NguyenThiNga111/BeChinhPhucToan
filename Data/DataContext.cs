@@ -42,7 +42,7 @@ namespace BeChinhPhucToan_BE.Data
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<StarPoint> StarPoints { get; set; }
-        public DbSet<Excercise> Excercises { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<NotifyParent> NotifyParents { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
