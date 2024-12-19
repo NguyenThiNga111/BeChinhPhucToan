@@ -7,7 +7,5 @@
         public string image { get; set; }
         public int grade { get; set; }
         public string status { get; set; }
-
-        public ICollection<Chapter>? Chapters { get; set; }
     }
 }

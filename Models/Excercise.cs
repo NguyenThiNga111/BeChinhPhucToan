@@ -8,7 +8,5 @@
 
         public int lessonID { get; set; }
         public Lesson? Lesson { get; set; }
-
-        public IList<Comment>? Comments { get; set; }
     }
 }

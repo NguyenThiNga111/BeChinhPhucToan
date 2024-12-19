@@ -5,6 +5,20 @@ namespace BeChinhPhucToan_BE.Data
 {
     public class DataContext : DbContext
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Cấu hình 1-1 giữa User và Administrator
+            modelBuilder.Entity<Administrator>()
+                .HasOne(a => a.User) // Một Administrator có 1 User
+                .WithOne(u => u.Administrator) // Một User có 1 Administrator
+                .HasForeignKey<Administrator>(a => a.phoneNumber); // Khóa ngoại của Administrator là phoneNumber
+
+            modelBuilder.Entity<Parent>()
+                .HasOne(a => a.User)
+                .WithOne(u => u.Parent)
+                .HasForeignKey<Parent>(a => a.phoneNumber);
+        }
+
         //Create Database & Tables
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }

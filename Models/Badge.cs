@@ -7,7 +7,5 @@
         public string image { get; set; }
         public string description { get; set; }
         public bool isAvailable { get; set; }
-
-        public IList<Purchase>? Purchase { get; set; }
     }
 }
