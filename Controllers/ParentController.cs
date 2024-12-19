@@ -21,9 +21,7 @@ namespace BeChinhPhucToan_BE.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Parent>>> GetAllParents()
         {
-            var parents = await _context.Parents.Include(p => p.NotifyParents) // Bao gồm NotifyParent
-          .ThenInclude(np => np.ParentNotification) // Bao gồm ParentNotification từ NotifyParent
-         .Include(p => p.User) // Bao gồm thông tin User
+            var parents = await _context.Parents.Include(p => p.User) // Bao gồm thông tin User
             .ToListAsync();
 
             return Ok(parents);

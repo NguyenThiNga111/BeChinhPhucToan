@@ -24,13 +24,13 @@ namespace BeChinhPhucToan_BE.Controllers
             var students = await _context.Students.ToListAsync();
             return Ok(students);
         }
-        // Get student by parent email
-        [HttpGet("{parentEmail}")]
-        public async Task<ActionResult<Student>> getStudent(string parentEmail)
+        // Get student by parent phone
+        [HttpGet("{parentPhone}")]
+        public async Task<ActionResult<Student>> getStudent(string parentPhone)
         {
             var student = await _context.Students
                 .Include(s => s.Parent)
-                .FirstOrDefaultAsync(s => s.Parent.email == parentEmail);
+                .FirstOrDefaultAsync(s => s.Parent.phoneNumber == parentPhone);
                 
             if(student is null)
             {
@@ -50,7 +50,7 @@ namespace BeChinhPhucToan_BE.Controllers
             {
                 _context.Students.Add(student);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(getStudent), new { parentEmail = student.parentEmail }, student);
+                return CreatedAtAction(nameof(getStudent), new { parentPhone = student.parentPhone }, student);
             }
             catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace BeChinhPhucToan_BE.Controllers
                 existingStudent.image = updateStudent.image;
                 existingStudent.dateOfBirth = updateStudent.dateOfBirth;
                 existingStudent.grade = updateStudent.grade;
-                existingStudent.parentEmail = updateStudent.parentEmail;
+                existingStudent.parentPhone = updateStudent.parentPhone;
                 _context.Students.Update(existingStudent);
                 await _context.SaveChangesAsync();
                 return Ok(existingStudent);

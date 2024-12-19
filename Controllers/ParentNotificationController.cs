@@ -22,8 +22,6 @@ namespace BeChinhPhucToan_BE.Controllers
         public async Task<ActionResult<List<ParentNotification>>> GetAllNotifications()
         {
             var notifications = await _context.ParentNotifications
-                .Include(n => n.NotifyParents) // Bao gồm danh sách NotifyParents
-                //.ThenInclude(np => np.Parent) // Bao gồm thêm thông tin Parent nếu cần
                 .ToListAsync();
 
             return Ok(notifications);
@@ -35,7 +33,6 @@ namespace BeChinhPhucToan_BE.Controllers
         public async Task<ActionResult<ParentNotification>> getNotification(int id)
         {
             var notification = await _context.ParentNotifications
-                .Include(n => n.NotifyParents)
                 .FirstOrDefaultAsync(n => n.id == id);
 
             if (notification is null)

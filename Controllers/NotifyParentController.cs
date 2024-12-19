@@ -37,7 +37,7 @@ namespace BeChinhPhucToan_BE.Controllers
         public async Task<ActionResult> addNotifyParent([FromBody] NotifyParent notifyParent)
         {
             // Kiểm tra khóa ngoại
-            var parentExists = await _context.Parents.AnyAsync(p => p.email == notifyParent.parentEmail);
+            var parentExists = await _context.Parents.AnyAsync(p => p.email == notifyParent.parentPhone);
             var notificationExists = await _context.ParentNotifications.AnyAsync(n => n.id == notifyParent.notificationID);
 
             if (!parentExists || !notificationExists)
@@ -45,7 +45,7 @@ namespace BeChinhPhucToan_BE.Controllers
 
             // Kiểm tra trùng lặp khóa chính
             var existingNotifyParent = await _context.NotifyParents
-                .FirstOrDefaultAsync(np => np.parentEmail == notifyParent.parentEmail
+                .FirstOrDefaultAsync(np => np.parentPhone == notifyParent.parentPhone
                                         && np.notificationID == notifyParent.notificationID);
             if (existingNotifyParent != null)
                 return Conflict(new { message = "NotifyParent already exists!" });
@@ -63,7 +63,7 @@ namespace BeChinhPhucToan_BE.Controllers
         public async Task<IActionResult> deleteNotifyParent(string parentEmail, int notificationID)
         {
             var notifyParent = await _context.NotifyParents
-                .FirstOrDefaultAsync(np => np.parentEmail == parentEmail && np.notificationID == notificationID);
+                .FirstOrDefaultAsync(np => np.parentPhone == parentEmail && np.notificationID == notificationID);
 
             if (notifyParent == null)
                 return NotFound(new { message = "NotifyParent not found!" });
