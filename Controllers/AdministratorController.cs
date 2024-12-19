@@ -24,10 +24,10 @@ namespace BeChinhPhucToan_BE.Controllers
             return Ok(admins);
         }
 
-        [HttpGet("{email}")]
-        public async Task<ActionResult<Administrator>> getAdmin(string email)
+        [HttpGet("{phoneNumber}")]
+        public async Task<ActionResult<Administrator>> getAdmin(string phoneNumber)
         {
-            var admin = await _context.Administrators.FindAsync(email);
+            var admin = await _context.Administrators.FindAsync(phoneNumber);
             if (admin is null)
                 return NotFound(new { message = "Administrator is not found!" });
             return Ok(admin);
@@ -46,7 +46,7 @@ namespace BeChinhPhucToan_BE.Controllers
             catch (DbUpdateException ex)
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("PRIMARY KEY"))
-                    return BadRequest(new { message = "The email is already in use!" });
+                    return BadRequest(new { message = "The phone number is already in use!" });
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.InnerException.Message });
             }
             catch (Exception ex)
@@ -55,12 +55,12 @@ namespace BeChinhPhucToan_BE.Controllers
             }
         }
 
-        [HttpPut("{email}")]
+        [HttpPut("{phoneNumber}")]
         public async Task<ActionResult<Administrator>> updateAdmin([FromBody]Administrator newInfo)
         {
             try 
             {
-                var admin = await _context.Administrators.FindAsync(newInfo.email);
+                var admin = await _context.Administrators.FindAsync(newInfo.phoneNumber);
                 if (admin is null)
                     return NotFound(new { message = "Administrator is not found!" });
 
@@ -73,7 +73,7 @@ namespace BeChinhPhucToan_BE.Controllers
             catch (DbUpdateException ex)
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("PRIMARY KEY"))
-                    return BadRequest(new { message = "The email is already in use!" });
+                    return BadRequest(new { message = "The phone number is already in use!" });
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.InnerException.Message });
             }
             catch (Exception ex)
@@ -82,10 +82,10 @@ namespace BeChinhPhucToan_BE.Controllers
             }
         }
 
-        [HttpDelete("{email}")]
-        public async Task<IActionResult> deleteAdmin(string email)
+        [HttpDelete("{phoneNumber}")]
+        public async Task<IActionResult> deleteAdmin(string phoneNumber)
         {
-            var admin = await _context.Administrators.FindAsync(email);
+            var admin = await _context.Administrators.FindAsync(phoneNumber);
             
             if (admin is null)
                 return NotFound(new { message = "Administrator is not found!" });
