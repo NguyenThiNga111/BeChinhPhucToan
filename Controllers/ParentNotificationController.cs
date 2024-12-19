@@ -19,13 +19,16 @@ namespace BeChinhPhucToan_BE.Controllers
 
         // GET: /ParentNotification
         [HttpGet]
-        public async Task<ActionResult<List<ParentNotification>>> getAllNotifications()
+        public async Task<ActionResult<List<ParentNotification>>> GetAllNotifications()
         {
             var notifications = await _context.ParentNotifications
-                .Include(n => n.NotifyParents) // Bao gồm danh sách NotifyParent
+                .Include(n => n.NotifyParents) // Bao gồm danh sách NotifyParents
+                //.ThenInclude(np => np.Parent) // Bao gồm thêm thông tin Parent nếu cần
                 .ToListAsync();
+
             return Ok(notifications);
         }
+
 
         // GET: /ParentNotification/{id}
         [HttpGet("{id}")]

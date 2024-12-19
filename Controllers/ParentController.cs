@@ -6,131 +6,121 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeChinhPhucToan_BE.Controllers
 {
-	[Route("[controller]")]
-	[ApiController]
-	public class ParentController : ControllerBase
-	{
-		private readonly DataContext _context;
+    [Route("[controller]")]
+    [ApiController]
+    public class ParentController : ControllerBase
+    {
+        private readonly DataContext _context;
 
-		public ParentController(DataContext context)
-		{
-			_context = context;
-		}
+        public ParentController(DataContext context)
+        {
+            _context = context;
+        }
 
-		// GET: /Parent
-		[HttpGet]
-		public async Task<ActionResult<List<Parent>>> getAllParents()
-		{
-			var parents = await _context.Parents
-				.Include(p => p.User) // Bao gồm thông tin User liên kết
-				.ToListAsync();
-			return Ok(parents);
-		}
+        // GET: /Parent
+        [HttpGet]
+        public async Task<ActionResult<List<Parent>>> GetAllParents()
+        {
+            var parents = await _context.Parents.Include(p => p.NotifyParents) // Bao gồm NotifyParent
+          .ThenInclude(np => np.ParentNotification) // Bao gồm ParentNotification từ NotifyParent
+         .Include(p => p.User) // Bao gồm thông tin User
+            .ToListAsync();
 
-		// GET: /Parent/{email}
-		[HttpGet("{email}")]
-		public async Task<ActionResult<Parent>> getParent(string email)
-		{
-			var parent = await _context.Parents
-				.Include(p => p.User)
-				.FirstOrDefaultAsync(p => p.email == email);
+            return Ok(parents);
 
-			if (parent is null)
-				return NotFound(new { message = "Parent is not found!" });
+        }
 
-			return Ok(parent);
-		}
+        // GET: /Parent/{email}
+        [HttpGet("{email}")]
+        public async Task<ActionResult<Parent>> GetParent(string email)
+        {
+            var parent = await _context.Parents
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.email == email);
 
-		// POST: /Parent
-		[HttpPost]
-		public async Task<ActionResult> addParent([FromBody] Parent parent)
-		{
-			try
-			{
-				// Kiểm tra nếu số điện thoại đã tồn tại trong bảng User
-				var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.phoneNumber == parent.phoneNumber);
-				if (existingUser == null)
-				{
-					// Tạo User mới nếu chưa tồn tại
-					var newUser = new User
-					{
-						phoneNumber = parent.phoneNumber,
-						password = parent.User.password, // Cần mã hóa mật khẩu
-						isVerify = false
-					};
-					_context.Users.Add(newUser);
-				}
+            if (parent == null)
+                return NotFound(new { message = "Parent not found!" });
 
-				// Thêm Parent vào cơ sở dữ liệu
-				_context.Parents.Add(parent);
-				await _context.SaveChangesAsync();
+            return Ok(parent);
+        }
 
-				return Ok(new { message = "Parent created successfully!" });
-			}
-			catch (DbUpdateException ex)
-			{
-				if (ex.InnerException != null && ex.InnerException.Message.Contains("PRIMARY KEY"))
-					return BadRequest(new { message = "The email is already in use!" });
-				return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.InnerException.Message });
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
-			}
-		}
+        // POST: /Parent
+        [HttpPost]
+        public async Task<ActionResult> AddParent([FromBody] Parent parent)
+        {
+            if (parent == null || string.IsNullOrEmpty(parent.email) || string.IsNullOrEmpty(parent.phoneNumber))
+                return BadRequest(new { message = "Invalid input data." });
 
-		// PUT: /Parent/{email}
-		[HttpPut("{email}")]
-		public async Task<ActionResult> updateParent(string email, [FromBody] Parent updatedParent)
-		{
-			try
-			{
-				// Tìm Parent theo email
-				var parent = await _context.Parents.FirstOrDefaultAsync(p => p.email == email);
-				if (parent is null)
-					return NotFound(new { message = "Parent is not found!" });
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                // Kiểm tra email đã tồn tại
+                var existingParent = await _context.Parents.FirstOrDefaultAsync(p => p.email == parent.email);
+                if (existingParent != null)
+                    return BadRequest(new { message = "Parent with this email already exists!" });
 
-				// Cập nhật thông tin Parent
-				parent.fullName = updatedParent.fullName;
-				parent.guardian = updatedParent.guardian;
+                // Kiểm tra phoneNumber trong User
+                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.phoneNumber == parent.phoneNumber);
+                if (existingUser == null)
+                {
+                    // Tạo User mới nếu chưa tồn tại
+                    var newUser = new User
+                    {
+                        phoneNumber = parent.phoneNumber,
+                        password = "default_password", // Mật khẩu mặc định
+                        createdAt = DateTime.Now,
+                        updatedAt = DateTime.Now
+                    };
+                    _context.Users.Add(newUser);
+                    await _context.SaveChangesAsync();
+                }
 
-				// Nếu cần cập nhật User (ví dụ: mật khẩu)
-				var user = await _context.Users.FirstOrDefaultAsync(u => u.phoneNumber == updatedParent.phoneNumber);
-				if (user != null && updatedParent.User != null)
-				{
-					user.password = updatedParent.User.password; // Cần mã hóa mật khẩu
-				}
+                // Gán thời gian tạo và cập nhật
+                parent.createdAt = DateTime.Now;
+                parent.updatedAt = DateTime.Now;
 
-				await _context.SaveChangesAsync();
-				return Ok(new { message = "Parent updated successfully!" });
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
-			}
-		}
+                // Thêm Parent mới
+                _context.Parents.Add(parent);
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
-		// DELETE: /Parent/{email}
-		[HttpDelete("{email}")]
-		public async Task<IActionResult> deleteParent(string email)
-		{
-			try
-			{
-				// Tìm Parent theo email
-				var parent = await _context.Parents.FirstOrDefaultAsync(p => p.email == email);
-				if (parent is null)
-					return NotFound(new { message = "Parent is not found!" });
+                return Ok(new { message = "Parent created successfully!" });
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
+            }
+        }
 
-				// Xóa Parent
-				_context.Parents.Remove(parent);
-				await _context.SaveChangesAsync();
+        // PUT: /Parent/{email}
+        [HttpPut("{email}")]
+        public async Task<ActionResult> UpdateParent(string email, [FromBody] Parent updatedParent)
+        {
+            var parent = await _context.Parents.FirstOrDefaultAsync(p => p.email == email);
+            if (parent == null)
+                return NotFound(new { message = "Parent not found!" });
 
-				return Ok(new { message = "Parent deleted successfully!" });
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
-			}
-		}
-	}
+            // Cập nhật thông tin Parent
+            parent.fullName = updatedParent.fullName ?? parent.fullName;
+            parent.guardian = updatedParent.guardian ?? parent.guardian;
+            parent.updatedAt = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Parent updated successfully!" });
+        }
+
+        // DELETE: /Parent/{email}
+        [HttpDelete("{email}")]
+        public async Task<ActionResult> DeleteParent(string email)
+        {
+            var parent = await _context.Parents.FirstOrDefaultAsync(p => p.email == email);
+            if (parent == null)
+                return NotFound(new { message = "Parent not found!" });
+
+            _context.Parents.Remove(parent);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Parent deleted successfully!" });
+        }
+    }
 }

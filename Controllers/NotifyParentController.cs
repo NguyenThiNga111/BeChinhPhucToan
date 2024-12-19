@@ -19,15 +19,18 @@ namespace BeChinhPhucToan_BE.Controllers
 
         // GET: /NotifyParent
         [HttpGet]
-        public async Task<ActionResult<List<NotifyParent>>> getAllNotifyParents()
+        public async Task<ActionResult<List<NotifyParent>>> GetAllNotifyParents()
         {
+
             var notifyParents = await _context.NotifyParents
-                .Include(np => np.Parent)
-                .Include(np => np.ParentNotification)
+
+                .Include(np => np.ParentNotification) // Bao gồm thông tin ParentNotification
+                .Include(np => np.Parent) // Bao gồm thông tin Parent
                 .ToListAsync();
 
             return Ok(notifyParents);
         }
+
 
         // POST: /NotifyParent
         [HttpPost]
@@ -40,11 +43,20 @@ namespace BeChinhPhucToan_BE.Controllers
             if (!parentExists || !notificationExists)
                 return BadRequest(new { message = "Parent or Notification does not exist!" });
 
+            // Kiểm tra trùng lặp khóa chính
+            var existingNotifyParent = await _context.NotifyParents
+                .FirstOrDefaultAsync(np => np.parentEmail == notifyParent.parentEmail
+                                        && np.notificationID == notifyParent.notificationID);
+            if (existingNotifyParent != null)
+                return Conflict(new { message = "NotifyParent already exists!" });
+
+            // Thêm bản ghi mới nếu không trùng lặp
             _context.NotifyParents.Add(notifyParent);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "NotifyParent created successfully!" });
         }
+
 
         // DELETE: /NotifyParent/{parentEmail}/{notificationID}
         [HttpDelete("{parentEmail}/{notificationID}")]

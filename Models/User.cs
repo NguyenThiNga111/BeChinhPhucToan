@@ -11,11 +11,8 @@ namespace BeChinhPhucToan_BE.Models
         public bool? isVerify { get; set; }
         public string? otpCode { get; set; }
         public string? otpExpiration { get; set; }       
-
         public Administrator? Administrator { get; set; }
-        public Parent? Parent { get; set; }
+        //public Parent? Parent { get; set; }
         public ICollection<Feedback>? Feedbacks { get; set; }
-        //public DateTime createAt { get; set; } = DateTime.Now;
-        //public DateTime updateAt { get; set; } = DateTime.Now;
     }
 }
