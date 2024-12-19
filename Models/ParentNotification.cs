@@ -1,4 +1,6 @@
-﻿namespace BeChinhPhucToan_BE.Models
+﻿using System.Text.Json.Serialization;
+
+namespace BeChinhPhucToan_BE.Models
 {
     public class ParentNotification : BaseEntity
     {

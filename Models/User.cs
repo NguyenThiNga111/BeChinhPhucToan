@@ -10,8 +10,8 @@ namespace BeChinhPhucToan_BE.Models
         public string? role { get; set; }
         public bool? isVerify { get; set; }
         public string? otpCode { get; set; }
-        public string? otpExpiration { get; set; }       
-
+        public string? otpExpiration { get; set; }
+        
         public Administrator? Administrator { get; set; }
         public Parent? Parent { get; set; }
     }

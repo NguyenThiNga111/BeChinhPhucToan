@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+<<<<<<< nguyen/database
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BeChinhPhucToan_BE.Models
