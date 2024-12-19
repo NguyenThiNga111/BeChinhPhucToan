@@ -28,13 +28,13 @@ namespace BeChinhPhucToan_BE.Controllers
 
         }
 
-        // GET: /Parent/{email}
-        [HttpGet("{email}")]
-        public async Task<ActionResult<Parent>> GetParent(string email)
+        // GET: /Parent/{phoneNumber}
+        [HttpGet("{phoneNumber}")]
+        public async Task<ActionResult<Parent>> GetParent(string phoneNumber)
         {
             var parent = await _context.Parents
                 .Include(p => p.User)
-                .FirstOrDefaultAsync(p => p.email == email);
+                .FirstOrDefaultAsync(p => p.phoneNumber == phoneNumber);
 
             if (parent == null)
                 return NotFound(new { message = "Parent not found!" });
@@ -46,16 +46,16 @@ namespace BeChinhPhucToan_BE.Controllers
         [HttpPost]
         public async Task<ActionResult> AddParent([FromBody] Parent parent)
         {
-            if (parent == null || string.IsNullOrEmpty(parent.email) || string.IsNullOrEmpty(parent.phoneNumber))
+            if (parent == null || string.IsNullOrEmpty(parent.phoneNumber) || string.IsNullOrEmpty(parent.phoneNumber))
                 return BadRequest(new { message = "Invalid input data." });
 
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                // Kiểm tra email đã tồn tại
-                var existingParent = await _context.Parents.FirstOrDefaultAsync(p => p.email == parent.email);
+                // Kiểm tra phoneNumber đã tồn tại
+                var existingParent = await _context.Parents.FirstOrDefaultAsync(p => p.phoneNumber == parent.phoneNumber);
                 if (existingParent != null)
-                    return BadRequest(new { message = "Parent with this email already exists!" });
+                    return BadRequest(new { message = "Parent with this phoneNumber already exists!" });
 
                 // Kiểm tra phoneNumber trong User
                 var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.phoneNumber == parent.phoneNumber);
@@ -91,11 +91,11 @@ namespace BeChinhPhucToan_BE.Controllers
             }
         }
 
-        // PUT: /Parent/{email}
-        [HttpPut("{email}")]
-        public async Task<ActionResult> UpdateParent(string email, [FromBody] Parent updatedParent)
+        // PUT: /Parent/{phoneNumber}
+        [HttpPut("{phoneNumber}")]
+        public async Task<ActionResult> UpdateParent(string phoneNumber, [FromBody] Parent updatedParent)
         {
-            var parent = await _context.Parents.FirstOrDefaultAsync(p => p.email == email);
+            var parent = await _context.Parents.FirstOrDefaultAsync(p => p.phoneNumber == phoneNumber);
             if (parent == null)
                 return NotFound(new { message = "Parent not found!" });
 
@@ -108,11 +108,11 @@ namespace BeChinhPhucToan_BE.Controllers
             return Ok(new { message = "Parent updated successfully!" });
         }
 
-        // DELETE: /Parent/{email}
-        [HttpDelete("{email}")]
-        public async Task<ActionResult> DeleteParent(string email)
+        // DELETE: /Parent/{phoneNumber}
+        [HttpDelete("{phoneNumber}")]
+        public async Task<ActionResult> DeleteParent(string phoneNumber)
         {
-            var parent = await _context.Parents.FirstOrDefaultAsync(p => p.email == email);
+            var parent = await _context.Parents.FirstOrDefaultAsync(p => p.phoneNumber == phoneNumber);
             if (parent == null)
                 return NotFound(new { message = "Parent not found!" });
 
