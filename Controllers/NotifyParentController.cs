@@ -36,21 +36,22 @@ namespace BeChinhPhucToan_BE.Controllers
         [HttpPost]
         public async Task<ActionResult> addNotifyParent([FromBody] NotifyParent notifyParent)
         {
-            // Kiểm tra khóa ngoại
-            var parentExists = await _context.Parents.AnyAsync(p => p.phoneNumber == notifyParent.parentPhone);
-            var notificationExists = await _context.ParentNotifications.AnyAsync(n => n.id == notifyParent.notificationID);
+            var parent = await _context.Parents.FirstOrDefaultAsync(p => p.phoneNumber == notifyParent.parentPhone);
+            var notification = await _context.ParentNotifications.FirstOrDefaultAsync(n => n.id == notifyParent.notificationID);
 
-            if (!parentExists || !notificationExists)
+            if (parent == null || notification == null)
+            {
                 return BadRequest(new { message = "Parent or Notification does not exist!" });
+            }
 
-            // Kiểm tra trùng lặp khóa chính
             var existingNotifyParent = await _context.NotifyParents
                 .FirstOrDefaultAsync(np => np.parentPhone == notifyParent.parentPhone
                                         && np.notificationID == notifyParent.notificationID);
             if (existingNotifyParent != null)
+            {
                 return Conflict(new { message = "NotifyParent already exists!" });
+            }
 
-            // Thêm bản ghi mới nếu không trùng lặp
             _context.NotifyParents.Add(notifyParent);
             await _context.SaveChangesAsync();
 

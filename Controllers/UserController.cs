@@ -20,7 +20,7 @@ namespace BeChinhPhucToan_BE.Controllers
         [HttpGet]
         public async Task<ActionResult<List<User>>> getAllUsers()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.Include(p => p.Parent).ToListAsync();
             return Ok(users);
         }
 
