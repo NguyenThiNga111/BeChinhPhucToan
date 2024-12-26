@@ -8,37 +8,37 @@ namespace BeChinhPhucToan_BE.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class GoalController : ControllerBase
+    public class ChapterController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public GoalController(DataContext context)
+        public ChapterController(DataContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Goal>>> getAllGoals()
+        public async Task<ActionResult<List<Chapter>>> getAllChapters()
         {
-            var goals = await _context.Goals.ToListAsync();
-            return Ok(goals);
+            var chapters = await _context.Chapters.ToListAsync();
+            return Ok(chapters);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Goal>> getGoal(int id)
+        public async Task<ActionResult<Chapter>> getChapter(int id)
         {
-            var goal = await _context.Goals.FindAsync(id);
-            if (goal is null)
-                return NotFound(new { message = "Goal is not found!" });
-            return Ok(goal);
+            var chapter = await _context.Chapters.FindAsync(id);
+            if (chapter is null)
+                return NotFound(new { message = "Chapter is not found!" });
+            return Ok(chapter);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Goal>> addGoal([FromBody] Goal goal)
+        public async Task<ActionResult<Chapter>> addChapter([FromBody] Chapter chapter)
         {
             try
             {
-                _context.Goals.Add(goal);
+                _context.Chapters.Add(chapter);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Created successfully!" });
@@ -50,19 +50,16 @@ namespace BeChinhPhucToan_BE.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Goal>> updateGoal([FromBody] Goal newInfo)
+        public async Task<ActionResult<Chapter>> updateChapter([FromBody] Chapter newInfo)
         {
             try
             {
-                var goal = await _context.Goals.FindAsync(newInfo.id);
-                if (goal is null)
-                    return NotFound(new { message = "Goal is not found!" });
+                var chapter = await _context.Chapters.FindAsync(newInfo.id);
+                if (chapter is null)
+                    return NotFound(new { message = "Chapter is not found!" });
 
-                goal.dateStart = newInfo.dateStart;
-                goal.dateEnd = newInfo.dateEnd;
-                goal.numberLesson = newInfo.numberLesson;
-                goal.typeLesson = newInfo.typeLesson;
-                goal.badgeID = newInfo.badgeID;
+                chapter.name = newInfo.name;
+                chapter.courseID = newInfo.courseID;
 
                 await _context.SaveChangesAsync();
 
@@ -75,14 +72,14 @@ namespace BeChinhPhucToan_BE.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> deleteGoal(int id)
+        public async Task<IActionResult> deleteChapter(int id)
         {
-            var goal = await _context.Goals.FindAsync(id);
+            var chapter = await _context.Chapters.FindAsync(id);
 
-            if (goal is null)
-                return NotFound(new { message = "Goal is not found!" });
+            if (chapter is null)
+                return NotFound(new { message = "Chapter is not found!" });
 
-            _context.Goals.Remove(goal);
+            _context.Chapters.Remove(chapter);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Deleted successfully!" });

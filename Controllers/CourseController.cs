@@ -8,37 +8,37 @@ namespace BeChinhPhucToan_BE.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class GoalController : ControllerBase
+    public class CourseController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public GoalController(DataContext context)
+        public CourseController(DataContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Goal>>> getAllGoals()
+        public async Task<ActionResult<List<Course>>> getAllCourses()
         {
-            var goals = await _context.Goals.ToListAsync();
-            return Ok(goals);
+            var courses = await _context.Courses.ToListAsync();
+            return Ok(courses);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Goal>> getGoal(int id)
+        public async Task<ActionResult<Course>> getCourse(int id)
         {
-            var goal = await _context.Goals.FindAsync(id);
-            if (goal is null)
-                return NotFound(new { message = "Goal is not found!" });
-            return Ok(goal);
+            var course = await _context.Courses.FindAsync(id);
+            if (course is null)
+                return NotFound(new { message = "Course is not found!" });
+            return Ok(course);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Goal>> addGoal([FromBody] Goal goal)
+        public async Task<ActionResult<Course>> addCourse([FromBody] Course course)
         {
             try
             {
-                _context.Goals.Add(goal);
+                _context.Courses.Add(course);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Created successfully!" });
@@ -50,19 +50,18 @@ namespace BeChinhPhucToan_BE.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Goal>> updateGoal([FromBody] Goal newInfo)
+        public async Task<ActionResult<Course>> updateCourse([FromBody] Course newInfo)
         {
             try
             {
-                var goal = await _context.Goals.FindAsync(newInfo.id);
-                if (goal is null)
-                    return NotFound(new { message = "Goal is not found!" });
+                var course = await _context.Courses.FindAsync(newInfo.id);
+                if (course is null)
+                    return NotFound(new { message = "Course is not found!" });
 
-                goal.dateStart = newInfo.dateStart;
-                goal.dateEnd = newInfo.dateEnd;
-                goal.numberLesson = newInfo.numberLesson;
-                goal.typeLesson = newInfo.typeLesson;
-                goal.badgeID = newInfo.badgeID;
+                course.name = newInfo.name;
+                course.image = newInfo.image;
+                course.grade = newInfo.grade;
+                course.status = newInfo.status;
 
                 await _context.SaveChangesAsync();
 
@@ -75,14 +74,14 @@ namespace BeChinhPhucToan_BE.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> deleteGoal(int id)
+        public async Task<IActionResult> deleteCourse(int id)
         {
-            var goal = await _context.Goals.FindAsync(id);
+            var course = await _context.Courses.FindAsync(id);
 
-            if (goal is null)
-                return NotFound(new { message = "Goal is not found!" });
+            if (course is null)
+                return NotFound(new { message = "Course is not found!" });
 
-            _context.Goals.Remove(goal);
+            _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Deleted successfully!" });
