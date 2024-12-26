@@ -7,6 +7,7 @@ namespace BeChinhPhucToan_BE.Models
         public int id { get; set; }
         public int ratting { get; set; }
         public string message { get; set; }
+
         [ForeignKey(nameof(User))]
         public string userPhone { get; set; }
         public User? User { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BeChinhPhucToan_BE.Models
 {
@@ -8,7 +9,8 @@ namespace BeChinhPhucToan_BE.Models
     {
         public int studentID { get; set; }
         public Student? Student { get; set; }
+        [ForeignKey(nameof(StudentNotification))]
         public int notificationID { get; set; }
-        public ParentNotification? ParentNotification { get; set; }
+        public StudentNotification? StudentNotification { get; set; }
     }
 }

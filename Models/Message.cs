@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BeChinhPhucToan_BE.Models
 {
-    [PrimaryKey(nameof(groupID), nameof(studentID))]
+    [PrimaryKey(nameof(groupChatID), nameof(studentID))]
     public class Message : BaseEntity
     {
-        public int groupID { get; set; }
+        public int groupChatID { get; set; }
         public GroupChat? GroupChat { get; set; }
         public int studentID { get; set; }
         public Student? Student { get; set; }
