@@ -38,7 +38,7 @@ namespace BeChinhPhucToan_BE.Controllers
         {
             try
             {
-                _context.Lessons.Add(v);
+                _context.Lessons.Add(lesson);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Created successfully!" });
