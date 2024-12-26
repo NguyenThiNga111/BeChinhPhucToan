@@ -45,9 +45,7 @@ namespace BeChinhPhucToan_BE.Controllers
             }
             catch (DbUpdateException ex)
             {
-                if (ex.InnerException != null && ex.InnerException.Message.Contains("PRIMARY KEY"))
-                    return BadRequest(new { message = "The phone number is already in use!" });
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.InnerException.Message });
+                return ExceptionController.primaryKeyException(ex, "phone number");
             }
             catch (Exception ex)
             {
@@ -72,9 +70,7 @@ namespace BeChinhPhucToan_BE.Controllers
             }
             catch (DbUpdateException ex)
             {
-                if (ex.InnerException != null && ex.InnerException.Message.Contains("PRIMARY KEY"))
-                    return BadRequest(new { message = "The phone number is already in use!" });
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.InnerException.Message });
+                return ExceptionController.primaryKeyException(ex, "phone number");
             }
             catch (Exception ex)
             {
