@@ -1,27 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BeChinhPhucToan_BE.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BeChinhPhucToan_BE.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Cấu hình 1-1 giữa User và Administrator
-            modelBuilder.Entity<Administrator>()
-                .HasOne(a => a.User) // Một Administrator có 1 User
-                .WithOne(u => u.Administrator) // Một User có 1 Administrator
-                .HasForeignKey<Administrator>(a => a.phoneNumber); // Khóa ngoại của Administrator là phoneNumber
-
-            modelBuilder.Entity<Parent>()
-                .HasOne(a => a.User)
-                .WithOne(u => u.Parent)
-                .HasForeignKey<Parent>(a => a.phoneNumber);
-        }
 
         //Create Database & Tables
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<IdentityUser>().Property(x => x.PhoneNumber).IsRequired();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<Administrator> Administrators { get; set; }        
         public DbSet<Parent> Parents { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }

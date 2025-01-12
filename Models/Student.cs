@@ -10,8 +10,7 @@ namespace BeChinhPhucToan_BE.Models
         public DateOnly dateOfBirth { get; set; }
         public int grade { get; set; }
 
-        [ForeignKey(nameof(Parent))]
-        public string parentPhone { get; set; }
+        public string parentId { get; set; }
         public Parent? Parent { get; set; }
         public Setting? Setting { get; set; }
     }
