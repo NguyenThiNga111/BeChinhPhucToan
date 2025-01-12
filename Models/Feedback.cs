@@ -8,8 +8,7 @@ namespace BeChinhPhucToan_BE.Models
         public int ratting { get; set; }
         public string message { get; set; }
 
-        [ForeignKey(nameof(User))]
-        public string userPhone { get; set; }
+        public string userId { get; set; }
         public User? User { get; set; }
     }
 }

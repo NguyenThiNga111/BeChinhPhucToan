@@ -7,11 +7,9 @@ namespace BeChinhPhucToan_BE.Models
     public class Administrator : BaseEntity
     {
         [Key]
-        public string phoneNumber { get; set; }
-        public string email { get; set; }
-        public string fullName { get; set; }
-
-        [JsonIgnore]
+        public string userId { get; set; }
+        [ForeignKey("userId")]
         public User? User { get; set; }
+        public string fullName { get; set; }        
     }
 }
