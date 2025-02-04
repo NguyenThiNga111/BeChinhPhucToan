@@ -12,33 +12,46 @@ namespace BeChinhPhucToan_BE.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        //private readonly DataContext _context;
-        //public StudentController(DataContext context)
-        //{
-        //    _context = context;
-        //}
-        //// Get all student
-        //[HttpGet]
-        //public async Task<ActionResult<List<Student>>> getAllStudent()
-        //{
-        //    var students = await _context.Students.ToListAsync();
-        //    return Ok(students);
-        //}
-        //// Get student by parent phone
-        //[HttpGet("{parentPhone}")]
-        //public async Task<ActionResult<Student>> getStudent(string parentPhone)
-        //{
-        //    var student = await _context.Students
-        //        .Include(s => s.Parent)
-        //        .FirstOrDefaultAsync(s => s.Parent.phoneNumber == parentPhone);
-                
-        //    if(student is null)
-        //    {
-        //        return NotFound(new { message = "Student not found" });
-        //    }
-        //    return Ok(student);
-        //}
+        private readonly DataContext _context;
+        public StudentController(DataContext context)
+        {
+            _context = context;
+        }
+
+        // Get all student
+        [HttpGet]
+        public async Task<ActionResult<List<Student>>> getAllStudent()
+        {
+            var students = await _context.Students.ToListAsync();
+            return Ok(students);
+        }
+
+
+        //// Get student by parent email
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<Student>> getStudent(string userId)
+        {
+            var student = await _context.Students
+                .Where(s => s.userId == userId)
+                .ToListAsync();
+            return Ok(student);
+        }
+
         //// Post add student 
+        [HttpPost]
+        public async Task<ActionResult<Student>> addUser([FromBody] Student student)
+        {
+            var newStudent = await _context.Students.FindAsync(student.fullName);
+            if (newStudent is null)
+            {
+                _context.Students.Add(student);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Tạo mới thành công!" });
+            }
+
+            return BadRequest(new { message = "Tên của bé đã được đăng ký!" });
+        }
         //[HttpPost]
         //public async Task<ActionResult<Student>> addStudent([FromBody] Student student)
         //{

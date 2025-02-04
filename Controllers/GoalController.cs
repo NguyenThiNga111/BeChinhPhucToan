@@ -49,43 +49,43 @@ namespace BeChinhPhucToan_BE.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Goal>> updateGoal([FromBody] Goal newInfo)
-        {
-            try
-            {
-                var goal = await _context.Goals.FindAsync(newInfo.id);
-                if (goal is null)
-                    return NotFound(new { message = "Goal is not found!" });
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult<Goal>> updateGoal([FromBody] Goal newInfo)
+        //{
+        //    try
+        //    {
+        //        var goal = await _context.Goals.FindAsync(newInfo.id);
+        //        if (goal is null)
+        //            return NotFound(new { message = "Goal is not found!" });
 
-                goal.dateStart = newInfo.dateStart;
-                goal.dateEnd = newInfo.dateEnd;
-                goal.numberLesson = newInfo.numberLesson;
-                goal.typeLesson = newInfo.typeLesson;
-                goal.badgeID = newInfo.badgeID;
+        //        goal.dateStart = newInfo.dateStart;
+        //        goal.dateEnd = newInfo.dateEnd;
+        //        goal.numberLesson = newInfo.numberLesson;
+        //        goal.typeLesson = newInfo.typeLesson;
+        //        goal.badgeID = newInfo.badgeID;
 
-                await _context.SaveChangesAsync();
+        //        await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Updated successfully!" });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
-            }
-        }
+        //        return Ok(new { message = "Updated successfully!" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
+        //    }
+        //}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> deleteGoal(int id)
-        {
-            var goal = await _context.Goals.FindAsync(id);
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> deleteGoal(int id)
+        //{
+        //    var goal = await _context.Goals.FindAsync(id);
 
-            if (goal is null)
-                return NotFound(new { message = "Goal is not found!" });
+        //    if (goal is null)
+        //        return NotFound(new { message = "Goal is not found!" });
 
-            _context.Goals.Remove(goal);
-            await _context.SaveChangesAsync();
+        //    _context.Goals.Remove(goal);
+        //    await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Deleted successfully!" });
-        }
+        //    return Ok(new { message = "Deleted successfully!" });
+        //}
     }
 }

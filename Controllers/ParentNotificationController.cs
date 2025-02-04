@@ -10,59 +10,59 @@ namespace BeChinhPhucToan_BE.Controllers
     [ApiController]
     public class ParentNotificationController : ControllerBase
     {
-        private readonly DataContext _context;
+        //private readonly DataContext _context;
 
-        public ParentNotificationController(DataContext context)
-        {
-            _context = context;
-        }
+        //public ParentNotificationController(DataContext context)
+        //{
+        //    _context = context;
+        //}
 
-        // GET: /ParentNotification
-        [HttpGet]
-        public async Task<ActionResult<List<ParentNotification>>> GetAllNotifications()
-        {
-            var notifications = await _context.ParentNotifications
-                .ToListAsync();
+        //// GET: /ParentNotification
+        //[HttpGet]
+        //public async Task<ActionResult<List<UserNotification>>> GetAllNotifications()
+        //{
+        //    var notifications = await _context.ParentNotifications
+        //        .ToListAsync();
 
-            return Ok(notifications);
-        }
+        //    return Ok(notifications);
+        //}
 
 
-        // GET: /ParentNotification/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ParentNotification>> getNotification(int id)
-        {
-            var notification = await _context.ParentNotifications
-                .FirstOrDefaultAsync(n => n.id == id);
+        //// GET: /ParentNotification/{id}
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<UserNotification>> getNotification(int id)
+        //{
+        //    var notification = await _context.ParentNotifications
+        //        .FirstOrDefaultAsync(n => n.id == id);
 
-            if (notification is null)
-                return NotFound(new { message = "Notification not found!" });
+        //    if (notification is null)
+        //        return NotFound(new { message = "Notification not found!" });
 
-            return Ok(notification);
-        }
+        //    return Ok(notification);
+        //}
 
-        // POST: /ParentNotification
-        [HttpPost]
-        public async Task<ActionResult> addNotification([FromBody] ParentNotification notification)
-        {
-            _context.ParentNotifications.Add(notification);
-            await _context.SaveChangesAsync();
+        //// POST: /ParentNotification
+        //[HttpPost]
+        //public async Task<ActionResult> addNotification([FromBody] UserNotification notification)
+        //{
+        //    _context.ParentNotifications.Add(notification);
+        //    await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Notification created successfully!" });
-        }
+        //    return Ok(new { message = "Notification created successfully!" });
+        //}
 
-        // DELETE: /ParentNotification/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> deleteNotification(int id)
-        {
-            var notification = await _context.ParentNotifications.FindAsync(id);
-            if (notification == null)
-                return NotFound(new { message = "Notification not found!" });
+        //// DELETE: /ParentNotification/{id}
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> deleteNotification(int id)
+        //{
+        //    var notification = await _context.ParentNotifications.FindAsync(id);
+        //    if (notification == null)
+        //        return NotFound(new { message = "Notification not found!" });
 
-            _context.ParentNotifications.Remove(notification);
-            await _context.SaveChangesAsync();
+        //    _context.ParentNotifications.Remove(notification);
+        //    await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Notification deleted successfully!" });
-        }
+        //    return Ok(new { message = "Notification deleted successfully!" });
+        //}
     }
 }

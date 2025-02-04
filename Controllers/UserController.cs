@@ -1,8 +1,10 @@
 ﻿using BeChinhPhucToan_BE.Data;
 using BeChinhPhucToan_BE.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.Xml;
 
 namespace BeChinhPhucToan_BE.Controllers
 {
@@ -10,49 +12,57 @@ namespace BeChinhPhucToan_BE.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        //private readonly DataContext _context;
+        private readonly DataContext _context;
 
-        //public UserController(DataContext context)
-        //{
-        //    _context = context;
-        //}
+        public UserController(DataContext context)
+        {
+            _context = context;
+        }
 
-        //[HttpGet]
-        //public async Task<ActionResult<List<User>>> getAllUsers()
-        //{
-        //    var users = await _context.Users.Include(p => p.Parent).ToListAsync();
-        //    return Ok(users);
-        //}
+        [HttpGet, Authorize]
+        public async Task<ActionResult<List<User>>> getAllUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+            return Ok(users);
+        }
 
-        //[HttpGet("{phoneNumber}")]
-        //public async Task<ActionResult<User>> getUser(string phoneNumber)
-        //{
-        //    var user = await _context.Users.FindAsync(phoneNumber);
-        //    if (user is null)
-        //        return NotFound(new { message = "User is not found!" });
-        //    return Ok(user);
-        //}
+        [HttpGet("UserExist")]
+        public async Task<ActionResult<User>> getUserExist(string email)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+            if (user is null)
+                return NotFound(new { message = "Email chưa được đăng ký!" });
+            return Ok(user);
+        }
 
-        //[HttpPost]
-        //public async Task<ActionResult<User>> addUser([FromBody] User user)
-        //{
-        //    try
-        //    {
-        //        user.password = BCPT.EnhancedHashPassword(user.password, 13);
-        //        _context.Users.Add(user);
-        //        await _context.SaveChangesAsync();
+        [HttpGet("UserNoneExist")]
+        public async Task<ActionResult<User>> getUserNoneExist(string email)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+            if (user is null)
+                return Ok();
+            return BadRequest(new { message = "Email đã được đăng ký!" });
+        }
 
-        //        return Ok(new { message = "Created successfully!" });
-        //    }
-        //    catch (DbUpdateException ex)
-        //    {
-        //        return ExceptionController.primaryKeyException(ex, "phone number");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
-        //    }
-        //}
+        [HttpPost]
+        public async Task<ActionResult<User>> addUser([FromBody] User user)
+        {
+            var newUser = await _context.Users.FindAsync(user.Email);
+            if (newUser is null)
+            {
+                // Tạo OTP
+                var otp = new Random().Next(100000, 999999).ToString();
+                user.OtpCode = otp;
+                user.OtpExpiration = DateTime.UtcNow.AddMinutes(5);
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Tạo mới thành công!" });
+            }
+
+            return BadRequest(new { message = "Email đã được đăng ký!" });
+        }
 
         //[HttpPut("{phoneNumber}")]
         //public async Task<ActionResult<User>> updateUser([FromBody] User newInfo)

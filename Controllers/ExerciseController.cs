@@ -24,6 +24,15 @@ namespace BeChinhPhucToan_BE.Controllers
             return Ok(exercises);
         }
 
+        [HttpGet("GetByLessonType")]
+        public async Task<ActionResult<List<Exercise>>> getByLessonType(int lessonTypeID)
+        {
+            var exercises = await _context.Exercises
+                                .Where(e => e.lessonTypeID == lessonTypeID)
+                                .ToListAsync();
+            return Ok(exercises);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Exercise>> getExercise(int id)
         {
@@ -49,28 +58,28 @@ namespace BeChinhPhucToan_BE.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Exercise>> updateExercise([FromBody] Exercise newInfo)
-        {
-            try
-            {
-                var exercise = await _context.Exercises.FindAsync(newInfo.id);
-                if (exercise is null)
-                    return NotFound(new { message = "Exercise is not found!" });
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult<Exercise>> updateExercise([FromBody] Exercise newInfo)
+        //{
+        //    try
+        //    {
+        //        var exercise = await _context.Exercises.FindAsync(newInfo.id);
+        //        if (exercise is null)
+        //            return NotFound(new { message = "Exercise is not found!" });
 
-                exercise.question = newInfo.question;
-                exercise.answer = newInfo.answer;
-                exercise.lessonID = newInfo.lessonID;
+        //        exercise.question = newInfo.question;
+        //        exercise.answer = newInfo.answer;
+        //        exercise.lessonID = newInfo.lessonID;
 
-                await _context.SaveChangesAsync();
+        //        await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Updated successfully!" });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
-            }
-        }
+        //        return Ok(new { message = "Updated successfully!" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
+        //    }
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteExercise(int id)
