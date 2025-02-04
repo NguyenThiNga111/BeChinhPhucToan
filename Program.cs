@@ -1,19 +1,28 @@
 using BeChinhPhucToan_BE.Data;
+using BeChinhPhucToan_BE.Models;
+using BeChinhPhucToan_BE.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+// Cấu hình Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-	options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    // Cấu hình Authorization cho Swagger
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
 	{
 		In = ParameterLocation.Header,
 		Name = "Authorization",
@@ -23,15 +32,26 @@ builder.Services.AddSwaggerGen(options =>
 	options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+
+// Cấu hình kết nối đến cơ sở dữ liệu SQL Server
 builder.Services.AddDbContext<DataContext>(options =>
 {
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+// Cấu hình xác thực và ủy quyền
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
+
+
+// Cấu hình các API của Identity (Authentication, Authorization)
+builder.Services.AddIdentityApiEndpoints<User>()
 	.AddEntityFrameworkStores<DataContext>();
+
+
+builder.Services.AddSingleton<SmsService>(new SmsService("_er7zI1s0rnF7oHFFlNgD1OM_KHaX1Tz"));
+
 
 // Add CORS policy
 builder.Services.AddCors(options =>
@@ -44,6 +64,8 @@ builder.Services.AddCors(options =>
 	});
 });
 
+builder.WebHost.UseUrls("http://0.0.0.0:5016");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -53,12 +75,14 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<User>();
 
 // Enable CORS globally
 app.UseCors("AllowAll");
 
-app.UseHttpsRedirection();
+app.UseAuthentication();
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

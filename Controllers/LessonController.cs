@@ -24,6 +24,15 @@ namespace BeChinhPhucToan_BE.Controllers
             return Ok(lessons);
         }
 
+        [HttpGet("GetByLessonType")]
+        public async Task<ActionResult<List<Lesson>>> getByLessonType(int lessonTypeID)
+        {
+            var lessons = await _context.Lessons
+                                .Where(l => l.lessonTypeID == lessonTypeID)
+                                .ToListAsync();
+            return Ok(lessons);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Lesson>> getLesson(int id)
         {
@@ -49,27 +58,27 @@ namespace BeChinhPhucToan_BE.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Lesson>> updateLesson([FromBody] Lesson newInfo)
-        {
-            try
-            {
-                var lesson = await _context.Lessons.FindAsync(newInfo.id);
-                if (lesson is null)
-                    return NotFound(new { message = "Lesson is not found!" });
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult<Lesson>> updateLesson([FromBody] Lesson newInfo)
+        //{
+        //    try
+        //    {
+        //        var lesson = await _context.Lessons.FindAsync(newInfo.id);
+        //        if (lesson is null)
+        //            return NotFound(new { message = "Lesson is not found!" });
 
-                lesson.name = newInfo.name;
-                lesson.chapterID = newInfo.chapterID;
+        //        lesson.name = newInfo.name;
+        //        lesson.chapterID = newInfo.chapterID;
 
-                await _context.SaveChangesAsync();
+        //        await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Updated successfully!" });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
-            }
-        }
+        //        return Ok(new { message = "Updated successfully!" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred." });
+        //    }
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteLesson(int id)
