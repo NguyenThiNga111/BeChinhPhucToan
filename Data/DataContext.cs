@@ -46,8 +46,10 @@ namespace BeChinhPhucToan_BE.Data
         //public DbSet<Chapter> Chapters { get; set; }
         public DbSet<LessonType> LessonTypes { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<LessonStatus> LessonStatuses { get; set; }
         //public DbSet<StarPoint> StarPoints { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<ExerciseStatus> ExerciseStatuses { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<LessonTest> LessonTests { get; set; }
         //public DbSet<Comment> Comments { get; set; }
