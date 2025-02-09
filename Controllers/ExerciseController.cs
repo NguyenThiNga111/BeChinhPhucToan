@@ -33,6 +33,18 @@ namespace BeChinhPhucToan_BE.Controllers
             return Ok(exercises);
         }
 
+        [HttpGet("GetExerciseCount")]
+        public async Task<ActionResult<int>> GetLessonCountByType(int lessonTypeID)
+        {
+            // Đếm số lượng bài học dựa trên lessonTypeID
+            var exerciseCount = await _context.Exercises
+                                    .Where(e => e.lessonTypeID == lessonTypeID)
+                                    .CountAsync();
+
+            // Trả về số lượng
+            return Ok(exerciseCount);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Exercise>> getExercise(int id)
         {
