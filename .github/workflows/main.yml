@@ -1,4 +1,7 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - BeChinhPhucToanBE20250210153944
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy ASP.Net Core app to Azure Web App - BeChinhPhucToan
 
 on:
   push:
@@ -10,7 +13,7 @@ jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read # This is required for actions/checkout
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +21,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '3.1'
+          dotnet-version: '8.x'
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -38,27 +41,18 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read # This is required for actions/checkout
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: 7743aa7b-affa-4acb-b475-93d3303d15ce
-          tenant-id: 447080b4-b9c6-4b0b-92fd-b543a68b4e97
-          subscription-id: 2933601b-f88f-4cf3-9f34-78943cb2ac83
-
+      
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'BeChinhPhucToanBE20250210153944'
+          app-name: 'BeChinhPhucToan'
           slot-name: 'Production'
           package: .
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_21ef943e706349fca5b59cf33cadc5d4 }}
